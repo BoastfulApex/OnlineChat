@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'bootstrap/css/bootstrap.min.css' %}">
+    <script>
+        function getCookie(name) {
+            let cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                const cookies = document.cookie.split(';');
+                for (let i = 0; i < cookies.length; i++) {
+                    const cookie = cookies[i].trim();
+                    // Does this cookie string begin with the name we want?
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                  }
+              }
+            return cookieValue;
+        }
+        const csrftoken = getCookie('csrftoken');
+      </script>
+</head>
+<body>
+    <div class="container space">
+        <div class='row'>
+        <div class="col-md-4">
+            <div class="overflow">
+                {% for profile in profiles %}
+                    {% if profile.user != request.user %}
+                <div class="container" onclick="chat({{request.user.id}},{{profile.user.id}})">
+                    <img src="{{profile.imageURL}}" alt="Avatar">
+                    <h3>{{profile.user.username}}</h3>
+                    <p>Hello. How are you today?</p>
+                <span class="time-right">11:00</span>
+                </div>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-4 bg-white">
+            <div class="overflow" id="chat">
+                <div class='container' id='right'>
+                    <img src='' alt='Avatar'>
+                    <p>text</p>
+                    <span class='time-right'>time</span>
+                </div>
+                <div class="container darker " id="left">
+                    <img src="" alt="Avatar" class="right">
+                    <p>text</p>
+                    <span class="time-left">time</span>
+                </div>
+            </div>
+            <input type="text" id="message">
+            <button onclick="send_message({{request.user.id}})">Send</button>
+        </div>
+
+        <div class="col-md-4 overflow">
+
+            <div class="card" >
+                <img class="thumbnail" src="{{new.imageURL}}">
+                <div class="box-element">
+                    <h3>John Doe</h3>
+                    <h4>Username</h4>
+                    <h4>Bio</h4>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+<script src="{% static 'js/script.js' %}"></script>
+</body>

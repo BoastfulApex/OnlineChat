@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <title></title>
+  <link rel= "stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+{% for message in messages %}
+  {% if message.user1.id == profile1.user.id %}
+    <div class="container darker">
+      <img src="{{profile1.imageURL}}" alt="Avatar" class="right">
+      <p>{{message.text}}</p>
+      <span class="time-left">{{message.time}}</span>
+    </div>
+
+  {% else %}
+  <div class="container">
+    <img src="{{profile2.imageURL}}" alt="Avatar">
+    <p>{{message.text}}</p>
+    <span class="time-right">{{message.time}}</span>
+  </div>
+ {% endif %}
+{% endfor %}
+
+<form method="POST" action="">
+  {% csrf_token %}
+  <table>
+      {{forms}}
+  </table>
+  <input type="submit" value="Send">
+</form>
+  <script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>
